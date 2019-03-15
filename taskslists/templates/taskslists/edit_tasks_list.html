@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit List: {{ tasks_list.name }}
+{% endblock %}
+
+{% block content %}
+<div class="list-group">
+{% if not tasks %}
+<p>You don't have any task in this list so far.</p>
+{% else %}
+    <a>task.id = {{ task.id }}</a>
+    <a>task_id = {{ task_id }}</a>
+    {% for task in tasks %}
+        {% if task.id|stringformat:"i" == task_id %}
+    <form method="post"
+          action="{% url 'edit_tasks_list' id=tasks_list.id task_id=task.id %}">
+            {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-primary" type="submit" name="edit" value="ok">Edit</button>
+        <a href="{% url 'edit_tasks_list' id=tasks_list.id task_id=0 %}">
+            <button class="btn btn-primary" type="button" name="cancel" value="no">Cancel</button>
+        </a>
+    </form>
+
+
+        {% else %}
+    <a class="list-group-item"
+       href="{% url 'edit_tasks_list' id=tasks_list.id task_id=task.id %}">
+        {{ task.name }}
+    </a>
+        {% endif %}
+    {% endfor %}
+
+{% endif %}
+    {% if task_id == "0" %}
+    <form method="post"
+          action="{% url 'edit_tasks_list' id=tasks_list.id task_id=task_id %}">
+            {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-primary" type="submit" name="edit" value="ok">Add new Task</button>
+        <a href="{% url 'view_tasks_list' id=tasks_list.id %}">
+            <button class="btn btn-primary" type="button" name="cancel" value="no">Cancel</button>
+        </a>
+    </form>
+    {% endif %}
+</div>
+<form action="{% url 'view_tasks_list' id=tasks_list.id %}">
+    <input class="btn btn-primary" type="submit" value="Back"/>
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+Lists
+{% endblock %}
+
+{% block content %}
+{% if lists %}
+<div class="list-group">
+    {% for list in lists %}
+    <a class="list-group-item" href="{% url 'view_tasks_list' id=list.id %}">
+        {{ list.name }}
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>You don't have any list so far.</p>
+{% endif %}
+<form action="{% url 'user_new_tasks_list' %}">
+    <input class="btn btn-primary" type="submit" value="Create new list"/>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+List: {{ tasks_list.name }}
+{% endblock %}
+
+{% block content %}
+{% if tasks %}
+<div class="list-group">
+    {% for task in tasks %}
+    <a class="list-group-item"
+    href="{% url 'scratch_task' id=tasks_list.id task_id=task.id %}">
+        {{ task }}
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>You don't have any task in this list so far.</p>
+{% endif %}
+<form action="{% url 'edit_tasks_list' id=tasks_list.id task_id=0 %}">
+    <input class="btn btn-primary" type="submit" value="Edit List"/>
+</form>
+{% endblock %}
