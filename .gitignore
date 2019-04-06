@@ -8,6 +8,10 @@ Icon
 __pycache__/
 *.py[cod]
 
+homeapp/tokens.py
+new_django/secret
+new_django/pass
+
 # C extensions
 *.so
 

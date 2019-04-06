@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open("sekret", 'r') as secret:
-    secret_key = secret.read()
+with open("secret", 'r') as secret:
+    secret_key = secret.read().strip()
 SECRET_KEY = secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -117,6 +117,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = "DENY"
+
+SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -134,6 +145,8 @@ EMAIL_USER_TLS = False
 EMAIL_USER_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'aniejek@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get("PASSWORD", "default")
+with open("pass", "r") as password:
+    email_password = password.read().strip()
+EMAIL_HOST_PASSWORD = email_password
 EMAIL_PORT = 465
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
